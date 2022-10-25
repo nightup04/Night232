@@ -1,0 +1,406 @@
+<html>
+ <head>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap" rel="stylesheet">
+    
+      <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-auth.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyDiGM_WUJVkW7fu15DDqys-nHMNxMqlnTg",
+ 	 authDomain: "nightsuki-8f8b3.firebaseapp.com",
+ 	 projectId: "nightsuki-8f8b3",
+  	storageBucket: "nightsuki-8f8b3.appspot.com",
+ 	 messagingSenderId: "293878953805",
+  appId: "1:293878953805:web:71d44c4626fdcf6c00a904",
+  measurementId: "G-RQBMX05YST"
+      };
+      var thumbnail;
+ 
+    firebase.initializeApp(config);
+    var database = firebase.database();
+  
+    var fileButton = document.getElementById("fileButton");
+        fileButton.addEventListener('change', function(e){
+        var file = e.target.files[0];
+        var storageRef = firebase.storage().ref(file.name);
+        storageRef.put(file);
+        thumbnail = "https://console.firebase.google.com/u/0/project/nightsuki-8f8b3/database/nightsuki-8f8b3-default-rtdb/data/~2F"+config["storageBucket"]+"/o/"+file.name+"?alt=media";
+    }); 
+    document.getElementById("add-data").onclick = function(e) {
+      
+      var title = document.getElementById('title').value;
+      var content = document.getElementById('content').value;
+      var rootRef = firebase.database().ref();
+      var storesRef = rootRef.child('app/data/');
+      var newStoreRef = storesRef.push();
+             newStoreRef.set({
+             title: title,
+             content: content,
+             thumbnail : thumbnail
+         });
+      alert("Success");
+    }  
+      
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+    
+    <!-- Include FirebaseUI -->
+    <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css"
+    />
+    
+    <script type="text/javascript">
+      // FirebaseUI config.
+      const uiConfig = {
+        signInSuccessUrl: "https://night-suki.blogspot.com/p/blog-page_20.html",
+        signInOptions: [
+          // Leave the lines as is for the providers you want to offer your users.
+          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+          firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        ],
+        // tosUrl and privacyPolicyUrl accept either url string or a callback
+        // function.
+        // Terms of service url/callback.
+        tosUrl: "#",
+        // Privacy policy url/callback.
+        privacyPolicyUrl: function () {
+          window.location.assign("#");
+        },
+      };
+
+      // Initialize the FirebaseUI Widget using Firebase.
+      const ui = new firebaseui.auth.AuthUI(firebase.auth());
+      // The start method will wait until the DOM is loaded.
+      ui.start("#firebaseui-auth-container", uiConfig);
+    </script>
+
+    <!-- Style -->
+    <link rel="stylesheet" href="style.css" />
+   <script>
+    // Event listener for user state changed
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    const userName = user.displayName;
+    const photoUrl = user.photoURL;
+
+    document.querySelector(".user-name").textContent = userName;
+
+    photoUrl
+      ? (document.querySelector(".img-profile").src = photoUrl)
+      : (document.querySelector(".img-profile").src = "./images/anonymous.jpg");
+  } else {
+    // User is signed out
+    window.location.replace("https://night-suki.blogspot.com/p/home.html");
+  }
+});
+
+// Event listener for logout button click
+document.getElementById("logout-btn").addEventListener("click", function () {
+  firebase.auth().signOut();
+});
+     document.getElementById("add-data").onclick = function(e) {
+      
+      var title = document.getElementById('title').value;
+      var content = document.getElementById('content').value;
+      var rootRef = firebase.database().ref();
+      var storesRef = rootRef.child('app/data/');
+      var newStoreRef = storesRef.push();
+             newStoreRef.set({
+             title: title,
+             content: content,
+             thumbnail : thumbnail
+         });
+      alert("Success");
+     }
+     
+     
+  </script>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+  </head>
+  
+  
+<style>
+  * {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    border: 0;
+  }
+  body {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+  }
+    .main .PopularPosts,
+    .page_body .centered>#footer,
+    #comments,
+    header.centered-top-container,
+    .post-title,
+    .post-share-buttons,
+    .bg-photo-container,
+    .bg-photo-overlay   {
+      display: none;
+       box-sizing: border-box;
+    }
+ 
+    .Blog .blog-posts .post-outer-container,
+    .Blog .blog-posts .post-outer-container .post-outer,
+    .page_body .centered 
+    .centered-bottom {
+      padding: 0;
+       box-sizing: border-box;
+      margin: 0;
+    }
+  
+
+    .post-body,
+    .page_body .widget {
+      margin: 0;
+    }
+
+
+    .page_body .centered {
+      max-width: 100%;
+    }
+  button {
+    width; 100px;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    background-color: #FF0000;
+    border-radius: 15px 30px 15px 50px;
+     font-family: 'Prompt', sans-serif;
+  }
+  .bar-chan {
+    background-color: #7FFFD4;
+    overflow: hidden;
+    box-shadow: 5px 12px #0AFFFF;
+  }
+  .bar-chan a {
+    float: left;
+    color: #79BAEC;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    border-radius: 12px 12px ;
+  }
+  .bar-chan a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+   body, .colorback {
+    background-color: #FFFF33;
+    margin: 0px 0px;
+    padding: 0px 0px;
+    border-right: 0px;
+  }
+  
+   @media screen and (min-width: 300px) {
+     body, .colorback {
+    background-color: #FFFF33;
+    margin: 0px 0px;
+    padding: 0px 0px;
+    border-right: 0px;
+  }
+      * {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    border: 0;
+    
+  }
+  }
+  ////***.logo {
+    padding: 0px;
+    margin-top: 0px;
+    border-right: 0px;
+  }
+
+  ////***.box1 {
+    width: auto;
+  border: 2px solid white;
+  padding: 2px;
+  margin: 0px;
+    background-color: #FFFFFF;
+    border-radius; 22px 20px 50px 100px;
+  }***///
+
+    
+</style>
+  <body>
+    <div class="colorback">
+
+     
+  <div
+    class="header-wrapper"
+    style='background-image: url("https://drive.google.com/uc?export=view&id=1b3N1H3Iah1q-Qr-HuhsDfqsn8Oj4In5f"); background-position: 50% 0px; background-repeat: no-repeat; background-size: 100%; border: 0px; box-sizing: border-box; font-family: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; height: 589.094px; line-height: inherit; margin: 0px auto; padding: 0px; position: relative; vertical-align: baseline; width: auto;'
+  >
+    <div
+      class="header-inner"
+      style="border: 0px line-height: inherit; margin: 0px auto; position: relative; mex-width: auto;"
+    >
+     
+        <div
+          class="navbar"
+          style="border: 0px; box-sizing: border-box; font-family: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; margin: 0px; padding: 2.66667vw 0px 0px; vertical-align: baseline;"
+        >
+          <div
+            class="navbar-inner sliding mv-btns"
+            style=" border: 0px; box-sizing: border-box; display: flex;font-family: 'Prompt', sans-serif; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; justify-content: space-between; margin: 0px; padding: 0px 2.66667vw; vertical-align: baseline;"
+          >
+            <div class="box-contents" style="background-color: white;  border-radius: 6vw 6vw ;inherit;margin: 35.4667vw 0px 0px ;  padding: 0px; width: 100%;   "
+         >
+<div class="titole" style="align-items: center; border: 0px; margin: 0px; padding: 10px;  line-height: 1; margin: 10px;"
+           >
+        <h2 class="h2" style="border: 0px; box-sizing: border-box;">
+          <span style="">สวัสดีครับทุกคนนี่คือเว็บของผม</span>
+          </h2>
+        <p 
+           class="text"
+           style="border: 0px; box-sizing: border-box; color: #99a7ad; font-size: 2.66667vw;  line-height: 1.5; margin: 0px 0px 0px auto; padding: 0px 0px 0px 2.66667vw; text-indent: -2.66667vw; vertical-align: baseline; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.5; margin: 0px 0px 0px auto; padding: 0px 0px 0px 2.66667vw; text-indent: -2.66667vw; alogn: right;">
+          <span style="align-items: right; align-items: center; border: 0px; margin: 0px; padding: 10px;  line-height: 1; margin: 10px;"
+              >*เริ่มสร้างคอนเท็นได้เลย</span
+            ><br />
+          </p>
+        </div>
+      
+     
+    <div class="bar-chan">
+      <a class="active" href="#หน้าเผยแพร่">หน้าเผยแพร่</a>
+      <a href="#">กลับสู่หน้าสมัครสมาชิค</a>
+      <a href="#">contact</a>
+      <a href="https://night-suki.blogspot.com/p/blog-page_23.html">เสียงประกอบ</a>
+    </div><br>
+              
+              <div class="form">
+                <h2 class="text-center">ส่งผลงานของคุณที่นี่</h2>
+                <form>
+                  <tb class="form-input" style="">
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <textarea class="mdl-textfield__input" type="email"  rows= "1" id=""></textarea>
+                <label class="mdl-textfield__label">ชื่อ</label>
+              </div>
+              
+                    <div class="mdl-textfield mdl-js-textfield">
+                <textarea class="mdl-textfield__input" type="email" rows= "1" id="" ></textarea>
+                <label class="mdl-textfield__label" >email</label>
+              </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                <textarea class="mdl-textfield__input" type="number" rows= "1" id="" ></textarea>
+                <label class="mdl-textfield__label">เบอร์ true money</label>
+              </div>
+                    
+                    <input type="file" name="เลือกไฟล์" id="">
+                  </tb>
+                </form>
+                  </div>
+    <br>
+    
+              <div class="titole" style="align-items: center; border: 0px; margin: 0px; padding: 10px;  line-height: 1; margin: 10px;"
+           >
+        <h2 class="h2" style="border: 0px; box-sizing: border-box;">
+          <span style="">ออกจากระบบ</span>
+          </h2>
+              
+               <button href="https://night-suki.blogspot.com/p/home.html"class="logout-btn" type="logout-btn" id="logout-btn">signOut</button>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+      </div>
+      </div>
+ 
+  
+  </body>
+  <script>
+    // Event listener for user state changed
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    const userName = user.displayName;
+    const photoUrl = user.photoURL;
+
+    document.querySelector(".user-name").textContent = userName;
+
+    photoUrl
+      ? (document.querySelector(".img-profile").src = photoUrl)
+      : (document.querySelector(".img-profile").src = "./images/anonymous.jpg");
+  } else {
+    // User is signed out
+    window.location.replace("https://night-suki.blogspot.com/p/home.html");
+  }
+});
+
+// Event listener for logout button click
+document.getElementById("logout-btn").addEventListener("click", function () {
+  firebase.auth().signOut();
+});
+  </script>
+</html>
+      <!-----
+      <div
+              class="left"
+              style="border: 0px; box-sizing: border-box; font-family: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; margin: 0.8vw 0px auto; padding: 0px; vertical-align: baseline;"
+            >
+              <a
+                class="logo"
+                href=""
+                style="border: 0px; box-sizing: border-box; color: #002231; display: block; font-family: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; margin: 0px; padding: 0px; text-decoration-line: none; vertical-align: baseline;"
+                ><h1
+                  class="logo-text top"
+                  style="border: 0px; box-sizing: border-box; font-family: inherit; font-size: 16px; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; margin: 0px; padding: 0px; vertical-align: baseline; width: 56.8vw;"
+                >
+                  <img
+                    alt="Doraemon Channel เวอร์ชั่นเว็บmo"
+                    src=""
+                    style="border: none; box-sizing: border-box; font-family: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; margin: 0px auto; max-width: 100px; padding: 0px; vertical-align: bottom;"
+                  /></h1
+              ></a>
+
+<td class="mdl-data-table__cell--non-numeric">เบอร์ True money wallet </td>
+            <td>
+              <div class="mdl-textfield mdl-js-textfield">
+                <textarea class="mdl-textfield__input" type="text" rows= "1" id="content" ></textarea>
+                <label class="mdl-textfield__label" for="content">ใส่ข้อมูล......</label>
+              </div>
+              
+              </td>
+
+            </div>-----/>
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  </head>
+  <body>
+    <h1>Hello, world!</h1>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  </body>
+</html>
+
